@@ -1,12 +1,14 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, UseFilters } from '@nestjs/common';
 import { AppService } from './app.service';
+import { HttpErrorFilter } from './shared/http-error.filter';
 
 @Controller()
+@UseFilters(new HttpErrorFilter())
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/')
-  @Render('index')
+  @Get('/index')
+  @Render('login/index')
   root() {
     return { title: 'Home Page' };
   }
@@ -17,9 +19,9 @@ export class AppController {
     return { title: 'Video Upload Page' };
   }
 
-  @Get('/dashbord')
+  @Get('/')
   @Render('videolist')
   login() {
-    return { title: 'Dashbord Page' };
+    return { title: 'Video List' };
   }
 }

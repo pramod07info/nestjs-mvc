@@ -1,27 +1,29 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      {{success}}
+      
       <form class="forms-sample" method="POST" action="/youtube/file" enctype="multipart/form-data">
-        <div class="form-group">
-          <label>title</label>          
-          <div class="input-group col-xs-12">
-            <input type="text"  name="title">
-          </div>
-        </div><div class="form-group">
-          <label>Description</label>          
-          <div class="input-group col-xs-12">
-            <input type="text"  name="description">
+        <div class="form-group row">
+          <label for="exampleInputMobile" class="col-sm-3 col-form-label">Title</label>
+          <div class="col-sm-9">
+            <input type="text"  name="title" class="form-control" id="exampleInputMobile" placeholder="Mobile number">
           </div>
         </div>
-        <div class="form-group">
-          <label>Tags</label>          
-          <div class="input-group col-xs-12">
-            <input type="text"  name="tags">
+        <div class="form-group row">
+          <label for="exampleInputMobile" class="col-sm-3 col-form-label">Description</label>
+          <div class="col-sm-9">
+            <input type="text"   name="description" class="form-control" id="exampleInputMobile" placeholder="Mobile number">
           </div>
         </div>
+        <div class="form-group row">
+          <label for="exampleInputMobile" class="col-sm-3 col-form-label">Tags</label>
+          <div class="col-sm-9">
+            <input type="text"  name="tags" class="form-control" id="exampleInputMobile" placeholder="Mobile number">
+          </div>
+        </div>
+        
         <div class="form-group">
-          <label>File upload</label>
+          <label>Select File</label>
           
           <input type="file" name="file" class="file-upload-default">
           <div class="input-group col-xs-12">
@@ -31,10 +33,21 @@
             </span>
           </div>
         </div>
-        <div class="form-check form-check-flat form-check-primary float-right">
+        <div class="col-md-12">
+          <div class="col-md-3 form-check form-check-flat form-check-primary float-right">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" id="youtubeToken" > Remember me </label>
+            <input type="checkbox" class="form-check-input" id="youtubeToken" name="youtube"> Youtube </label>
         </div>
+        <div class="col-md-3 form-check form-check-flat form-check-primary float-right">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" id="dailymotion" name="dailymotion" > Dailymotion </label>
+        </div>
+        {{!-- <div class="col-md-3 form-check form-check-flat form-check-primary float-right">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" id="youtubeToken" name="dailymotion" > Dailymotion </label>
+        </div> --}}
+        </div>
+        
         <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
       </form>
     </div>
@@ -45,10 +58,10 @@
   $(function(){   
     $( "#youtubeToken" ).click(function() {
         var youtubeCheck = $("#youtubeToken").val();
-        alert( "Handler for .click() called." +youtubeCheck);
+        //lert( "Handler for .click() called." +youtubeCheck);
 
         $.ajax({url: "http://localhost:3008/youtube", success: function(result){
-          alert(result)
+         // alert(result)
             var win = window.open(result);
             win.focus();
         }});
