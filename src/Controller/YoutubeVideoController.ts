@@ -1,6 +1,10 @@
-import { Controller, Get, Render, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Render, Req, Res, UploadedFile,  UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { Express } from 'express';
+import { fileURLToPath } from "url";
 import { YoutubbeTokenDto } from "../dto/youtube-token.dto";
 import { YoutubeVideoService } from "../service/youtube-video.service";
+const multer = require("multer");
 
 @Controller('youtube')
 export class YoutubevideoController{
@@ -38,5 +42,16 @@ export class YoutubevideoController{
         }
     }
 
-
+    @UseInterceptors(FileInterceptor('file'))
+    @Post('/file')
+    @Render('uploadvideo')
+    uploadFile1(
+      @Body() req,
+      @UploadedFile() file: Express.Multer.File,
+    ) {
+        console.log("dkaslidsa ",file)        
+       //var data = this.youtubVideoService.uploadFile(req,file);
+      // console.log("data ",data);
+      return { success: 'successfully Upload video'};
+    }
 }

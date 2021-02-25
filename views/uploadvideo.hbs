@@ -1,12 +1,29 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-
-      <form class="forms-sample">
-
+      {{success}}
+      <form class="forms-sample" method="POST" action="/youtube/file" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>title</label>          
+          <div class="input-group col-xs-12">
+            <input type="text"  name="title">
+          </div>
+        </div><div class="form-group">
+          <label>Description</label>          
+          <div class="input-group col-xs-12">
+            <input type="text"  name="description">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tags</label>          
+          <div class="input-group col-xs-12">
+            <input type="text"  name="tags">
+          </div>
+        </div>
         <div class="form-group">
           <label>File upload</label>
-          <input type="file" name="img[]" class="file-upload-default">
+          
+          <input type="file" name="file" class="file-upload-default">
           <div class="input-group col-xs-12">
             <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
             <span class="input-group-append">
@@ -32,7 +49,7 @@
 
         $.ajax({url: "http://localhost:3008/youtube", success: function(result){
           alert(result)
-            var win = window.open(result, '_blank');
+            var win = window.open(result);
             win.focus();
         }});
     });

@@ -34,6 +34,19 @@ var authed = false;
 const SCOPES =
   "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile";
 
+  var Storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+      callback(null, "./videos");
+    },
+    filename: function (req, file, callback) {
+      callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+    },
+  });
+  
+var upload = multer({
+    storage: Storage,
+  }).single("file"); //Field name and max count
+
 @Injectable()
 export class YoutubeVideoService{
 
@@ -60,20 +73,10 @@ export class YoutubeVideoService{
     console.log(returnData);
     return returnData;
   }
-
-
-
-  
   
   async getToken(code):Promise<any>{
-    if (code) {
-    // Get an access token based on our OAuth code
-        return await this.kkk(code);
-  }   
-  }
-  async   kkk(code){
 
-  await  oAuth2Client.getToken(code, function (err, tokens):Promise<any> {
+    await  oAuth2Client.getToken(code, function (err, tokens):Promise<any> {
       if (err) {
       console.log("Error authenticating");
       console.log(err);
@@ -85,8 +88,49 @@ export class YoutubeVideoService{
       return tokens;
       }
   });
-
   }
 
+  uploadFile(req,file){
+
+        console.log(file.path);
+        title = req.title;
+        description = req.description;
+        tags = req.tags;
+        console.log(title);
+        console.log(description);
+        console.log(tags);
+        const youtube = google.youtube({ version: "v3", auth: oAuth2Client });
+        console.log(youtube)
+        youtube.videos.insert(
+          {
+            resource: {
+              // Video title and description
+              snippet: {
+                  title:title,
+                  description:description,
+                  tags:tags
+              },
+              // I don't want to spam my subscribers
+              status: {
+                privacyStatus: "private",
+              },
+            },
+            // This is for the callback function
+            part: "snippet,status",
+  
+            // Create the readable stream to upload the video
+            media: {
+              body: fs.createReadStream(file.path)
+            },
+          },
+          (err, data) => {
+            if(err) throw err
+            console.log(data)
+            console.log("Done.");
+            fs.unlinkSync(file.path);
+            return "success";
+          }
+        );
+  }
  
 }
