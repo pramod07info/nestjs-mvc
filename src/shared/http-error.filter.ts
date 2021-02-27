@@ -14,7 +14,7 @@ export class HttpErrorFilter implements ExceptionFilter{
           timestamp: new Date().toLocaleDateString(),
           path: request.url,
           method: request.method,
-          messgae: exception.message || exception.message.error || null
+          messgae: exception.message || exception.message || null
       };
 
       Logger.error(

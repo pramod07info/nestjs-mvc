@@ -3,7 +3,6 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { Express } from 'express';
 import { HttpErrorFilter } from "../shared/http-error.filter";
 import { YoutubeVideoService } from "../service/youtube-video.service";
-import { YoutubbeTokenDto } from "src/dto/youtube-token.dto";
 
 const fs = require("fs");
 
@@ -119,8 +118,7 @@ export class YoutubevideoController{
               },
             },
             // This is for the callback function
-            part: "snippet,status",
-  
+            part: "snippet,status",  
             // Create the readable stream to upload the video
             media: {
               body: fs.createReadStream(file.path)
@@ -149,6 +147,5 @@ export class YoutubevideoController{
             }
           }
         );
-
     }
 }
