@@ -27,10 +27,11 @@
     "axios": "^0.21.1",
     "google-auth-library": "^7.0.2",
     "googleapis": "^67.1.0",
+    "filestack-js": "^3.21.1",
+    "hbs": "^4.0.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
-    "hbs": "^4.0.4",
     "@types/multer": "^1.4.5"
   },
   "devDependencies": {
