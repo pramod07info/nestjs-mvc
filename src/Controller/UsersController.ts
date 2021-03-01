@@ -70,6 +70,7 @@ export class UsersController {
   }
   @Post('/login')
   login(@Body() createUsersDto: CreateUsersDto,@Res() res) {
+    console.log("Logindetails",createUsersDto);
     try {
       var data = {
         token:{},
@@ -114,7 +115,7 @@ export class UsersController {
           });
         }else{
           const iResponse: IResponse = {
-            statusCode: "200",
+            statusCode: "400",
             message: "Username Or password worng",
             data:""
           }
@@ -125,7 +126,7 @@ export class UsersController {
       
     } catch (error) {
       const iResponse: IResponse = {
-        statusCode: "200",
+        statusCode: "500",
         message: error.message,
         data:""
       }
