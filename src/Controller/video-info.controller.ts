@@ -46,9 +46,9 @@ export class videoInfoController {
     var data = qs.stringify({
     'Content-Type': 'application/x-www-form-urlencoded',
     'grant_type': 'password',
-    'client_id': 'c1832cbdcf7f0f5e77ad',
-    'client_secret': '228dd8b98a8f8dfafe50e96f1aa28f34cf13fe2e',
-    'username': 'pramod07info@gmail.com',
+    'client_id': '2b053236bd02dd40681d',
+    'client_secret': '9f184adc1d6eea56355fb85aaf8458bd2654a74f',
+    'username': 'sani009info@gmail.com',
     'password': 'Sani@341' 
     });
     var config = {
@@ -64,23 +64,33 @@ export class videoInfoController {
 
     axios(config)
     .then(function (response) {
-      console.log("token data ",JSON.stringify(response.data));
-      return res.send(response.data);
+      console.log("token data ",response);
+      var responseData = {
+        statusCode:200,
+        message:"success",
+        data:response.data
+      }
+      return res.send(responseData);
     })
     .catch(function (error) {
       console.log(error);
-      return res.send(error.message);
+      var responseData = {
+        statusCode:400,
+        message:error.response.data.error,
+        data:""
+      }
+      return res.send(responseData);
     });
   }
   @Post('/getVideoId')
   async getVideoid(@Req() req,@Res() res){
-      console.log("req",req.body);
+      console.log("req",req.body.data.access_token);
       var data = new FormData();
       var config = {
         method: 'post',
         url: 'https://api.dailymotion.com/me/videos',
         headers: { 
-          'Authorization': 'Bearer '+req.body.access_token, 
+          'Authorization': 'Bearer '+req.body.data.access_token,
           'Cookie': 'ts=216950; v1st=47258D7780AC95553BB31C2658863EED', 
           ...data.getHeaders()
         },
@@ -89,12 +99,24 @@ export class videoInfoController {
       console.log()
       axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        return res.send(response.data);
+        console.log(JSON.stringify(response.data.error));
+        
+          var responseData = {
+            statusCode:200,
+            message:"success",
+            data:response.data
+          }
+          return res.send(responseData);
+      
       })
       .catch(function (error) {
-        console.log(error);
-        return res.send(error.message);
+        console.log("error ",error);
+        var responseData = {
+          statusCode:400,
+          message:error.response.data.error,
+          data:""
+        }
+        return res.send(responseData);
       });
 
   }
@@ -102,34 +124,42 @@ export class videoInfoController {
   @Post('/uploadOnDailyMotion')
   uploadVideoOnDailyMotion(@Req() req,@Res() res){
    console.log("request Upload Video data",req.body);
- 
-var data = qs.stringify({
- 'channel': 'music',
-  'title': 'sofadog',
-  'url': req.body.url, 
-  'published': 'true' 
-});
-var config = {
-  method: 'post',
-  url: 'https://api.dailymotion.com/video/'+req.body.videoId,
-  headers: { 
-    'Authorization': 'Bearer '+req.body.access_token, 
-    'Content-Type': 'application/x-www-form-urlencoded', 
-    'Cookie': 'ts=216950; v1st=47258D7780AC95553BB31C2658863EED'
-  },
-  data : data
-};
-
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-  return res.send(response.data);
-})
-.catch(function (error) {
-  console.log(error);
-});
-
-
+      var data = qs.stringify({
+      'channel': 'music',
+        'title': 'sofadog',
+        'url': req.body.url,
+        'published': 'true' 
+      });
+      var config = {
+        method: 'post',
+        url: 'https://api.dailymotion.com/video/'+req.body.videoId,
+        headers: { 
+          'Authorization': 'Bearer '+req.body.access_token, 
+          'Content-Type': 'application/x-www-form-urlencoded', 
+          'Cookie': 'ts=216950; v1st=47258D7780AC95553BB31C2658863EED'
+        },
+        data : data
+      };
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+       // return res.send(response.data);
+        var responseData = {
+          statusCode:200,
+          message:"successfully uploaded video",
+          data:response.data
+        }
+        return res.send(responseData);
+      })
+      .catch(function (error) {
+        console.log(error);
+        var responseData = {
+          statusCode:400,
+          message:error.response.data.error,
+          data:""
+        }
+        return res.send(responseData);
+      });
   }
 
   @Get()

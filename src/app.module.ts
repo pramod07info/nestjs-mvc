@@ -17,7 +17,6 @@ import { VideoInfoEntity } from './entity/video-info.entity';
 import { YoutubeCredentialsEntity } from './entity/youtube-credentials.entity';
 import { YoutubeTokenEntity } from './entity/youtube-token.entity';
 import { TokenRepository } from './service/token-repository';
-import { UserTokenService } from './service/user-token.service';
 import { UsersService } from './service/users.service';
 import { VideoInfoService } from './service/video-info.service';
 import { YoutubeCredentialsService } from './service/youtube-credntials.service';
