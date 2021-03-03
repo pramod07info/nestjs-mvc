@@ -46,10 +46,14 @@ export class videoInfoController {
     var data = qs.stringify({
     'Content-Type': 'application/x-www-form-urlencoded',
     'grant_type': 'password',
-    'client_id': '2b053236bd02dd40681d',
-    'client_secret': '9f184adc1d6eea56355fb85aaf8458bd2654a74f',
+    'client_id': 'c1832cbdcf7f0f5e77ad',
+    'client_secret': '228dd8b98a8f8dfafe50e96f1aa28f34cf13fe2e',
+    'redirect_uri': 'http://localhost:5000/piece/callback',
+    'code': 'cba4f47bc749dfef485a17ab547cc907b167c3f2',
+    'auth_url': 'https://api.dailymotion.com/oauth/authorize',
     'username': 'sani009info@gmail.com',
-    'password': 'Sani@341' 
+    'password': 'Sani@341',
+    'scope': 'userinfo manage_videos'
     });
     var config = {
       method: 'post',
