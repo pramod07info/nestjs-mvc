@@ -1,0 +1,11 @@
+Get Authorization API URL 
+
+localhost:3008/youtube
+
+Post Method
+Url:=--  localhost:3008/youtube/file
+Requets FormDATA:
+"title":"",
+"description":"",
+"tags":"",
+"file":"Upload file <Multipart>",

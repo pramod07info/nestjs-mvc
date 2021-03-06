@@ -46,14 +46,13 @@ export class videoInfoController {
     var data = qs.stringify({
     'Content-Type': 'application/x-www-form-urlencoded',
     'grant_type': 'password',
-    'client_id': 'c1832cbdcf7f0f5e77ad',
-    'client_secret': '228dd8b98a8f8dfafe50e96f1aa28f34cf13fe2e',
+    'client_id': 'fc4d00e909879bb3849a',
+    'client_secret': 'ab2c9c8b6ff9166fdc1691c7868c7d6e89e46cfb',
     'redirect_uri': 'http://localhost:5000/piece/callback',
-    'code': 'cba4f47bc749dfef485a17ab547cc907b167c3f2',
     'auth_url': 'https://api.dailymotion.com/oauth/authorize',
-    'username': 'sani009info@gmail.com',
+    'username': 'tush241191@gmail.com',
     'password': 'Sani@341',
-    'scope': 'userinfo manage_videos'
+    'scope': 'userinfo manage_videos' 
     });
     var config = {
       method: 'post',
@@ -129,10 +128,10 @@ export class videoInfoController {
   uploadVideoOnDailyMotion(@Req() req,@Res() res){
    console.log("request Upload Video data",req.body);
       var data = qs.stringify({
-      'channel': 'music',
+        'channel': 'music',
         'title': 'sofadog',
         'url': req.body.url,
-        'published': 'true' 
+        'published': 'false' 
       });
       var config = {
         method: 'post',
