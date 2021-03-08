@@ -16,7 +16,7 @@ const OAuth2Data = {
     token_uri:"https://oauth2.googleapis.com/token",
     auth_provider_x509_cert_url:"https://www.googleapis.com/oauth2/v1/certs",
     client_secret:"VO7OCqY_ZePDPdXe2jkonVEA",
-    redirect_uris:["http://localhost:3008/youtube/google/callback"],
+    redirect_uris:["http://localhost:3000/dashboard"],
     javascript_origins:["http://localhost:3008"]
 
 }
@@ -32,7 +32,6 @@ const oAuth2Client = new google.auth.OAuth2(
 var authed = false;
 const SCOPES =
   "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile";
-
 
 @Controller('youtube')
 @UseFilters(new HttpErrorFilter())
@@ -147,5 +146,68 @@ export class YoutubevideoController{
             }
           }
         );
+    }
+
+    @Post('/uploadFileOnYoutube')
+    upoladVideo(@Req() req,@Res()res){
+      (async () => {
+        const data = await this.youtubVideoService.download('https://cdn.filestackcontent.com/myVtNURhQlGdijjRkroI', './video/20201001_Cazoo.Mega.Fundraising_jfiebx.mp4');
+        console.log(data); // The file is finished downloading.
+        console.log(req);
+        //alert("downloading file............")
+        const youtube = google.youtube({ version: "v3", auth: oAuth2Client });
+        console.log("youtube data ",youtube)
+        youtube.videos.insert(
+          {
+            resource: {
+              // Video title and description
+              snippet: {
+                  title:"sofadogpramod",
+                  description:"upload video by pramod",
+                  tags:"news"
+              },
+              // I don't want to spam my subscribers
+              status: {
+                privacyStatus: "private",
+              },
+            },
+            // This is for the callback function
+            part: "snippet,status",  
+            // Create the readable stream to upload the video
+            
+          //static path //  '/video demo upload/20201001_Cazoo.Mega.Fundraising_jfiebx.mp4'
+            media: {
+              body: fs.createReadStream('./video/20201001_Cazoo.Mega.Fundraising_jfiebx.mp4')
+            },
+          },
+          (err, data) => {
+            if(err) {
+                var responseData = {
+                    statusCode:201,
+                    message:"Failed",
+                    error:err.message,
+                    data:""
+                }
+                res.send(responseData);
+            }else{
+                console.log("Done.",data);
+               
+                if(data.data.status.uploadStatus == 'uploaded'){
+                    var response = {
+                        statusCode:201,
+                        message:"Successfully uploaded video",
+                        data:data.data.status
+                    }
+                   // fs.unlinkSync("./video/xyz.mp4");
+                    res.send(response);
+                }
+            }
+          }
+        );
+    })();
+    
+    
+
+
     }
 }
